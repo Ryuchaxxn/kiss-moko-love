@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KISS MOKO LOVE PLEASE</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    overflow: hidden;
+    background-image: url("1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container {
+    width:100vw;   
+    height:100vh; 
+    position:relative;
+    background: rgba(240,240,240,0.2);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+}
+
+h1 {
+    color: white;
+    font-size: 3rem;
+    text-shadow: 2px 2px 5px #000;
+}
+
+button {
+    padding:10px 20px;
+    font-size: 2rem;
+    border:none;
+    border-radius:5px;
+    background:#680707;
+    color:white;
+    cursor:pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.popup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ff4081;
+    color: white;
+    padding: 30px 50px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 15px;
+    opacity: 1;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 1000;
+    text-align: center;
+}
+
+.popup.hide {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+.popup img {
+    display:block;
+    margin: 15px auto 0;
+    max-width: 200px;
+    border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>KISS MOKO LOVE ❤️</h1>
+    <button id="kiss">KISS</button>
+    <button id="ayaw">AYAW</button>
+</div>
+<script>
+const kiss = document.getElementById("kiss");
+const ayaw = document.getElementById("ayaw");
+const container = document.querySelector(".container");
+let clickCount = 0;
+
+// Track sizes
+let kissSize = 2; // rem
+let ayawSize = 2; // rem
+
+const ayawarray = [
+    "Sige na please 🥺💖", 
+    "Ayaw talaga ohh 😅", 
+    "Loveeeee!! ❤️❤️", 
+    "Kiss lang isa lang eh 😘", 
+    "Lahhhh 😭", 
+    "Damot!!! 😤", 
+    "Huhuhu 😢", 
+    "Sige na pleaseee 🥰", 
+    "Ayaw talaga ohhh 😝", 
+    "Loveeeee!! 😍💓", 
+    "Kiss lang isa lang eh 💋", 
+    "Lahhhh 😂", 
+    "Damot!!! 🤦‍♂️", 
+    "Huhuhu 😭😭", 
+    "Pleeeeaseeee 😳💖", 
+    "Mahal kita 😘💞", 
+    "One kiss only 😏💋", 
+];
+
+// KISS button popup (regular)
+kiss.addEventListener("click", () => {
+    const popup = document.createElement("div");
+    popup.classList.add("popup");
+    popup.innerHTML = `
+        <div>Thank You Po!! ❤️</div>
+        <img src="bg12.jpg" alt="kiss image">
+    `;
+    document.body.appendChild(popup);
+    setTimeout(() => popup.classList.add("hide"), 2000);
+    popup.addEventListener("transitionend", () => { if (popup.classList.contains("hide")) popup.remove(); });
+});
+
+// AYAW button behavior
+ayaw.addEventListener("click", () => {
+    clickCount++;
+
+    // Grow KISS button
+    kissSize += 0.98 // grows faster
+    kiss.style.fontSize = kissSize + "rem";
+
+    // Shrink AYAW button
+    if (ayawSize > 0.2) { // minimum size
+        ayawSize -= 0.2;
+        ayaw.style.fontSize = ayawSize + "rem";
+    } else {
+        ayaw.style.display = "none"; // disappears
+    }
+
+    // Move AYAW randomly inside container
+    ayaw.style.position = "absolute";
+    const maxX = container.clientWidth - ayaw.offsetWidth;
+    const maxY = container.clientHeight - ayaw.offsetHeight;
+    ayaw.style.left = Math.random() * maxX + "px";
+    ayaw.style.top = Math.random() * maxY + "px";
+
+    // Special popups
+    let popup = document.createElement("div");
+    popup.classList.add("popup");
+
+    if (clickCount === 5) {
+        popup.innerHTML = `
+            <div>Ayaw mo ah!! 😆</div>
+            <img src="kiss.jpg" alt="funny kiss">
+        `;
+        document.body.appendChild(popup);
+        setTimeout(() => popup.classList.add("hide"), 2500);
+        popup.addEventListener("transitionend", () => { if (popup.classList.contains("hide")) popup.remove(); });
+        return;
+    }
+
+    if (clickCount === 10) {
+        popup.innerHTML = `
+            <div>GANDAAA NAMAN NITO KISS LANG OH!! 😆</div>
+            <img src="sayang.jpg" alt="funny kiss">
+        `;
+        document.body.appendChild(popup);
+        setTimeout(() => popup.classList.add("hide"), 2500);
+        popup.addEventListener("transitionend", () => { if (popup.classList.contains("hide")) popup.remove(); });
+        return;
+    }
+
+    // Normal random popup
+    const message = ayawarray[Math.floor(Math.random() * ayawarray.length)];
+    popup.textContent = message;
+    document.body.appendChild(popup);
+    setTimeout(() => popup.classList.add("hide"), 1500);
+    popup.addEventListener("transitionend", () => { if (popup.classList.contains("hide")) popup.remove(); });
+});
+</script>
+
+
+</body>
+</html>
